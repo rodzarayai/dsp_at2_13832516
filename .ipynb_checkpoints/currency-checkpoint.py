@@ -43,7 +43,7 @@ def reverse_rate(rate):
     
     
     
-def format_output(date, from_currency, to_currency, rate, amount):
+def format_output(rate, amount):
     """
     Function that will calculate the inverse rate from the provided input rate.
     It will check if the provided input rate is not equal to zero.
