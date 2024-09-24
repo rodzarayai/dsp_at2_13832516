@@ -1,5 +1,4 @@
 import plotly.express as px
-
 from frankfurter import *
 
 
@@ -75,7 +74,7 @@ def format_output(date, from_currency, to_currency, rate, inverse_rate, base_amo
     return output_mssg
 
 
-def make_conversion_chart(df):
+def make_conversion_chart(df,from_currency, to_currency):
     """
     Function to create an interactive line chart using Plotly, showing currency conversion
     rates over a specified period.
@@ -102,30 +101,27 @@ def make_conversion_chart(df):
     # Extract only the date columns
     date_columns = df.columns.difference(['start_date', 'amount', 'base', 'converted_to'])
     df_rates = df.melt(var_name='date', value_name='rate', value_vars=date_columns)
-    print(df)
-    print(df)
-    print(df)
+    #print(date_columns)
+    #print(df_rates)
     # Convert the 'date' column to datetime
-    df['date'] = pd.to_datetime(df['date'])
-
+    df_rates['date'] = pd.to_datetime(df_rates['date'])
+    #print(df_rates)
+    #print(df_rates.info())
     # Create the interactive line chart using Plotly
     fig = px.line(
-        df, 
-        x='date', 
-        y='rate', 
-        title=f'Conversion Rate from {from_currency} to {to_currency} Over Time',
-        labels={'rate': f'Conversion Rate ({to_currency})', 'date': 'Date'},
-        markers=True
-    )
-
-    # Return the figure for rendering in Streamlit or another interface
+            df_rates, 
+            x='date', 
+            y='rate', 
+            title=f'Conversion Rate from {from_currency} to {to_currency} Over Time',
+            labels={'rate': f'Conversion Rate ({to_currency})', 'date': 'Date'},
+            markers=True
+        )
     return fig
+        
 
-# Example of how to use this function in a Streamlit app
-def display_conversion_chart(df):
-
-    # Call the chart creation function
-    fig = make_conversion_chart(df)
+  
 
     # Display the chart in Streamlit
-    st.plotly_chart(fig)
+    
+
+

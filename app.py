@@ -1,7 +1,7 @@
 import streamlit as st
 from datetime import datetime, timedelta
 from frankfurter import *
-from currency import reverse_rate, round_rate, format_output
+from currency import *
 
 # Display Streamlit App Title
 st.title("Currency Converter")
@@ -89,10 +89,12 @@ else:
             output_mssg = format_output(historical_date, from_currency, to_currency, base_rate, inverse_rate, amount,fx_rate, latest=False)
             st.write(output_mssg)
             
-            print("calling period")
+            
             df_period = get_last_period(from_currency, to_currency, historical_date, amount)
             #print(df_period)
-            display_conversion_chart(df_period)
+            print("calling plot")
+            fig = make_conversion_chart(df_period, from_currency, to_currency)
+            st.plotly_chart(fig)
             
         except:
             if amount == 0.0:
@@ -102,9 +104,6 @@ else:
             else:
                 st.error('Failed to convert.', icon="🚨")
     
-
-
-
 
 
 
