@@ -1,7 +1,7 @@
 from api import get_url
 import json
 import pandas as pd
-
+from datetime import datetime, timedelta
 
 
 BASE_URL = "https://api.frankfurter.app"
@@ -112,7 +112,7 @@ def get_historical_rate(from_currency, to_currency, from_date, amount):
 
 
 #Get a conversion period. Should not be longer than 90 days
-def get_last_period(from_currency, to_currency, date_from=None, date_to=None, amount=1.0):
+def get_last_period(from_currency, to_currency, date_to, amount=1.0):
     """
     Function to retrieve currency conversion data for the past 60 days by default, 
     or a custom date range if provided. Ensures the period is no longer than 90 days.
@@ -123,8 +123,6 @@ def get_last_period(from_currency, to_currency, date_from=None, date_to=None, am
         The currency code to convert from.
     to_currency : str
         The currency code to convert to.
-    date_from : str, optional
-        The starting date in 'YYYY-MM-DD' format. Defaults to None.
     date_to : str, optional
         The ending date in 'YYYY-MM-DD' format. Defaults to None.
     amount : float, optional
@@ -136,52 +134,29 @@ def get_last_period(from_currency, to_currency, date_from=None, date_to=None, am
         A DataFrame containing the conversion rates for the selected period.
     """
     
-    # Get the latest date if no date_to is provided
-    latest_date_str, fx_rate = get_latest_rates(convert_from, convert_to, amount)
-    latest_date = datetime.strptime(latest_date_str, '%Y-%m-%d')
+    #print("1")
+    #print(date_to)
+    #print(type(date_to))
 
-    if not date_from and not date_to: #If they are not given, the calculate 30 days    
-        # Subtract 30 days from the latest date
-        prior_60_date = latest_date - timedelta(days=30)
-        date_from_str = prior_60_date.strftime('%Y-%m-%d')
-        date_to_str = latest_date_str
-    else:
-        date_from_date = datetime.strptime(date_from, '%Y-%m-%d')
-        date_to_date = datetime.strptime(date_to, '%Y-%m-%d')
-        
-        # Check if both dates are provided, if not, default to 30 days prior
-        if not date_from_date:
-            date_from_date = date_to_date - timedelta(days=30)
-        if not date_to_date:
-            date_to_date = date_from_date + timedelta(days=30)
-        
-        # Check that date_to_obj does not exceed the latest date
-        if date_to_date > latest_date:
-            date_to_date = latest_date
-            
-        # Calculate difference in days
-        days_difference = (date_to_date - date_from_date).days
-        
-        # Ensure the period is not longer than 90 days
-        if days_difference > 90:
-            raise ValueError("The date range cannot be longer than 90 days")
-        
-        # Convert dates back to string
-        date_from_str = date_from_date.strftime('%Y-%m-%d')
-        date_to_str = date_to_date.strftime('%Y-%m-%d')
+    prior_30_date = date_to - timedelta(days=30)
+    #print(prior_30_date)
+    date_from_str = prior_30_date.strftime('%Y-%m-%d')
+    #print(date_from_str)
 
- 
-    url = f"https://api.frankfurter.app/{date_from_str}..{date_to_str}?amount={amount}?from={from_currency}&to={to_currency}"
-    print(url)
+    #print("Aqui")
+    url = f"https://api.frankfurter.app/{date_from_str}..{date_to}?amount={amount}?from={from_currency}&to={to_currency}"
+    #print(url)
     status_code, data = get_url(url)
     if status_code == 200:
-        print(data)
+        #print(data)
         # Unpack rates in the format {date: rate}
         dates_rates = {date: list(rates.values())[0] for date, rates in data["rates"].items()}
-        print(dates_rates)
+        #print(dates_rates)
         # Flatten the data to include amount and base as columns
         flat_data = {**{'start_date': data['start_date'],'amount': data['amount'], 'base': data['base'], 'converted_to': to_currency},**dates_rates}
         df = pd.DataFrame([flat_data])
+        #print(df)
+        #print(type(df))
         return df
     else:
         print(f"Failed to retrieve data. Status code: {status_code}")

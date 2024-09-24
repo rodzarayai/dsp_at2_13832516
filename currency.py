@@ -1,6 +1,6 @@
-import plotly.express as px
-from frankfurter import *
+#import plotly.express as px
 
+from frankfurter import *
 
 
 def round_rate(rate):
@@ -75,7 +75,7 @@ def format_output(date, from_currency, to_currency, rate, inverse_rate, base_amo
     return output_mssg
 
 
-def make_conversion_chart(from_currency, to_currency, historical_date, amount):
+def make_conversion_chart(df):
     """
     Function to create an interactive line chart using Plotly, showing currency conversion
     rates over a specified period.
@@ -97,20 +97,20 @@ def make_conversion_chart(from_currency, to_currency, historical_date, amount):
         A Plotly interactive figure with conversion rates over time.
     """
     # Get the period data (dates and rates)
-    df_period = get_last_period(from_currency, to_currency, None, historical_date, amount)
-    
+  
+    print('1')
     # Extract only the date columns
-    date_columns = df_period.columns.difference(['start_date', 'amount', 'base', 'converted_to'])
-    df_rates = df_period.melt(var_name='date', value_name='rate', value_vars=date_columns)
-    print(df_period)
-    print(date_columns)
-    print(df_rates)
+    date_columns = df.columns.difference(['start_date', 'amount', 'base', 'converted_to'])
+    df_rates = df.melt(var_name='date', value_name='rate', value_vars=date_columns)
+    print(df)
+    print(df)
+    print(df)
     # Convert the 'date' column to datetime
-    df_rates['date'] = pd.to_datetime(df_rates['date'])
+    df['date'] = pd.to_datetime(df['date'])
 
     # Create the interactive line chart using Plotly
     fig = px.line(
-        df_rates, 
+        df, 
         x='date', 
         y='rate', 
         title=f'Conversion Rate from {from_currency} to {to_currency} Over Time',
@@ -122,14 +122,10 @@ def make_conversion_chart(from_currency, to_currency, historical_date, amount):
     return fig
 
 # Example of how to use this function in a Streamlit app
-def display_conversion_chart():
-    from_currency = 'AUD'
-    to_currency = 'CAD'
-    historical_date = '2024-09-20'
-    amount = 10.0
+def display_conversion_chart(df):
 
     # Call the chart creation function
-    fig = make_conversion_chart(from_currency, to_currency, historical_date, amount)
+    fig = make_conversion_chart(df)
 
     # Display the chart in Streamlit
     st.plotly_chart(fig)

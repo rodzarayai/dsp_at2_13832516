@@ -1,5 +1,5 @@
 import streamlit as st
-import datetime
+from datetime import datetime, timedelta
 from frankfurter import *
 from currency import reverse_rate, round_rate, format_output
 
@@ -22,7 +22,7 @@ else:
     currency_list = [f"{code} - {name}" for code, name in currencies.items()]
    
     #Amount as float
-    amount = st.number_input('Enter the amount to be converted:')
+    amount = st.number_input('Enter the amount to be converted:', 1.0)
     
     #From code, considering the name of the currency for better understanding
     from_code = st.selectbox('From currency', currency_list)
@@ -79,7 +79,7 @@ else:
     
     if historical_button:
         try:
-            fx_rate = get_historical_rate(from_currency, to_currency, historical_date, amount)
+            fx_rate = get_historical_rate(from_currency, to_currency, historical_date,  amount)
             inverse_rate = reverse_rate(fx_rate)
             fx_rate = round_rate(fx_rate)
             base_rate = fx_rate / amount 
@@ -89,10 +89,10 @@ else:
             output_mssg = format_output(historical_date, from_currency, to_currency, base_rate, inverse_rate, amount,fx_rate, latest=False)
             st.write(output_mssg)
             
-            #
-            df_period = get_last_period(from_currency, to_currency, None, historical_date, amount)
-            print(df_period)
-            display_conversion_chart()
+            print("calling period")
+            df_period = get_last_period(from_currency, to_currency, historical_date, amount)
+            #print(df_period)
+            display_conversion_chart(df_period)
             
         except:
             if amount == 0.0:
