@@ -3,6 +3,7 @@ import json
 import pandas as pd
 
 
+
 BASE_URL = "https://api.frankfurter.app"
 
 def get_currencies_list():
@@ -139,7 +140,7 @@ def get_last_period(from_currency, to_currency, date_from=None, date_to=None, am
     latest_date_str, fx_rate = get_latest_rates(convert_from, convert_to, amount)
     latest_date = datetime.strptime(latest_date_str, '%Y-%m-%d')
 
-    if not date_from and not date_to: #If they are not given, the calculate 60 days    
+    if not date_from and not date_to: #If they are not given, the calculate 30 days    
         # Subtract 30 days from the latest date
         prior_60_date = latest_date - timedelta(days=30)
         date_from_str = prior_60_date.strftime('%Y-%m-%d')
@@ -171,10 +172,13 @@ def get_last_period(from_currency, to_currency, date_from=None, date_to=None, am
 
  
     url = f"https://api.frankfurter.app/{date_from_str}..{date_to_str}?amount={amount}?from={from_currency}&to={to_currency}"
+    print(url)
     status_code, data = get_url(url)
     if status_code == 200:
+        print(data)
         # Unpack rates in the format {date: rate}
         dates_rates = {date: list(rates.values())[0] for date, rates in data["rates"].items()}
+        print(dates_rates)
         # Flatten the data to include amount and base as columns
         flat_data = {**{'start_date': data['start_date'],'amount': data['amount'], 'base': data['base'], 'converted_to': to_currency},**dates_rates}
         df = pd.DataFrame([flat_data])
