@@ -62,27 +62,30 @@ def format_output(date, from_currency, to_currency, rate,  amount, latest=True):
     float
         Inverse of input FX conversion rate
     """
+    
     #Reverse rate
     inverse_rate = reverse_rate(rate)
     
     #Reverse rate
     
     base_rate = rate / amount 
-    print(base_rate)
+
     base_rate = round_rate(base_rate) #format
-    print(base_rate)
+
                                 
     if latest:
-        output_mssg = f"As of {date}, the latest available conversion rate from {from_currency} to {to_currency} was {base_rate}.\nTherefore, {amount} in {from_currency} correspond to {rate} in {to_currency}. The inverse rate was {inverse_rate}."
+        
+        output_mssg = f"As of **{date}**, the latest available conversion rate from **{from_currency}** to **{to_currency}** was **{base_rate}**.\nTherefore, **{amount}** in **{from_currency}** correspond to **{rate}** in **{to_currency}**. The inverse rate was **{inverse_rate}**."
+
     
     else:
-        output_mssg = f"As of {date}, the conversion rate from {from_currency} to {to_currency} was {base_rate}.\nTherefore, {amount} in {from_currency} correspond to {rate} in {to_currency}. The inverse rate was {inverse_rate}."
-    
+        output_mssg = f"As of **{date}**, the conversion rate from **{from_currency}** to **{to_currency}** was **{base_rate}**.\nTherefore, **{amount}** in **{from_currency}** correspond to **{rate}** in **{to_currency}**. The inverse rate was **{inverse_rate}**."
+  
     
     return output_mssg
 
 
-def make_conversion_chart(df,from_currency, to_currency):
+def make_conversion_chart(df, from_currency, to_currency):
     """
     Function to create an interactive line chart using Plotly, showing currency conversion
     rates over a specified period.
@@ -105,12 +108,12 @@ def make_conversion_chart(df,from_currency, to_currency):
     """
     # Get the period data (dates and rates)
   
-    print('1')
+    #print('1')
     # Extract only the date columns
     date_columns = df.columns.difference(['start_date', 'amount', 'base', 'converted_to'])
     df_rates = df.melt(var_name='date', value_name='rate', value_vars=date_columns)
     #print(date_columns)
-    #print(df_rates)
+    print(df_rates)
     # Convert the 'date' column to datetime
     df_rates['date'] = pd.to_datetime(df_rates['date'])
     #print(df_rates)
@@ -120,8 +123,8 @@ def make_conversion_chart(df,from_currency, to_currency):
             df_rates, 
             x='date', 
             y='rate', 
-            title=f'Conversion Rate from {from_currency} to {to_currency} Over Time',
-            labels={'rate': f'Conversion Rate ({to_currency})', 'date': 'Date'},
+            title=f'FX Rate from {from_currency} to {to_currency} last 30 days',
+            labels={'rate': f'FX rate  from ({from_currency}) to ({to_currency})'},
             markers=True
         )
     return fig

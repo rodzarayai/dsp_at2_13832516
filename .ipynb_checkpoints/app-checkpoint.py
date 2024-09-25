@@ -3,8 +3,43 @@ from datetime import datetime, timedelta
 from frankfurter import *
 from currency import *
 
-# Display Streamlit App Title
-st.title("Currency Converter")
+
+
+
+#====================================================================PAGE CONFIG
+apptitle = 'Currency Conversion App'
+
+st.set_page_config(page_title=apptitle, 
+                   page_icon="💰")
+
+
+
+
+# Show the title and the logo in the same line
+col1, col2 = st.columns([3, 1]) # ratio between columns
+
+with col1:
+    st.title("Currency Conversion App")
+
+with col2:
+    st.image('logo.png', width=100) 
+
+
+st.markdown("""
+<h2 style='text-align: center; font-size: 20px'> 
+    The Currency Conversion App uses the Frankfurter API to retrieve the conversion rates between two currency codes of in a certain date.
+</h2>
+            
+<p style='text-align: center; font-size: 16px'>
+    See the documentation on 
+    <a href='https://github.com/rodzarayai/dsp_at2_13832516/blob/master/README.md' target='_blank'>GitHub</a>.
+</p>
+""", unsafe_allow_html=True)
+
+st.header("", divider="gray")
+
+
+#====================================================================CURRENCY LIST
 
 # Get the list of available currencies from Frankfurter
 currencies  = get_currencies_list()
@@ -20,6 +55,16 @@ else:
 
     # Add input fields for capturing amount, from and to currencies
     currency_list = [f"{code} - {name}" for code, name in currencies.items()]
+    st.markdown(
+    """
+    <style>
+    label {
+        font-size: 40px;
+    }
+    </style>
+    """, 
+    unsafe_allow_html=True
+    )
    
     #Amount as float
     amount = st.number_input('Enter the amount to be converted:', 1.0)
@@ -31,7 +76,7 @@ else:
     from_currency = from_code.split('-')[0].strip()
     
     #To code, considering the name of the currency for better understanding
-    to_code = st.selectbox('To currency', currency_list)
+    to_code = st.selectbox('To currency', currency_list, index=1) #Start on the second position to avoid error 
     
     #To currency, for code usage
     to_currency = to_code.split('-')[0].strip()
@@ -57,7 +102,7 @@ else:
             st.write(output_mssg)
             
             #Print the last 30 days
-            df_period = get_last_period(from_currency, to_currency, latest_date, amount)
+            df_period = get_last_period(from_currency, to_currency, latest_date)
             #print(df_period)
             #print("calling plot")
             fig = make_conversion_chart(df_period, from_currency, to_currency)
@@ -84,12 +129,12 @@ else:
             
             fx_rate = get_historical_rate(from_currency, to_currency, historical_date,  amount)            
             
-            output_mssg = format_output(latest_date, from_currency, to_currency, fx_rate, amount, latest=False)
+            output_mssg = format_output(historical_date, from_currency, to_currency, fx_rate, amount, latest=False)
             
             st.write(output_mssg)
             
             #Print the last 30 days
-            df_period = get_last_period(from_currency, to_currency, historical_date, amount)
+            df_period = get_last_period(from_currency, to_currency, historical_date)
             #print(df_period)
             #print("calling plot")
             fig = make_conversion_chart(df_period, from_currency, to_currency)

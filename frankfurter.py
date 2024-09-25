@@ -134,18 +134,22 @@ def get_last_period(from_currency, to_currency, date_to, amount=1.0):
         A DataFrame containing the conversion rates for the selected period.
     """
     
-    #print("1")
-    #print(date_to)
-    #print(type(date_to))
 
+    print(date_to)
+    print(type(date_to))
+    if isinstance(date_to, str):
+        date_to = datetime.strptime(date_to,'%Y-%m-%d').date()
+    
+    print(date_to)
+    print(type(date_to))
     prior_30_date = date_to - timedelta(days=30)
-    #print(prior_30_date)
+
     date_from_str = prior_30_date.strftime('%Y-%m-%d')
-    #print(date_from_str)
+
 
     #print("Aqui")
-    url = f"https://api.frankfurter.app/{date_from_str}..{date_to}?amount={amount}?from={from_currency}&to={to_currency}"
-    #print(url)
+    url = f"https://api.frankfurter.app/{date_from_str}..{date_to}?amount={amount}&from={from_currency}&to={to_currency}"
+    print(url)
     status_code, data = get_url(url)
     if status_code == 200:
         #print(data)
