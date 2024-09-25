@@ -27,7 +27,7 @@ with col2:
 
 st.markdown("""
 <h2 style='text-align: center; font-size: 20px'> 
-    The Currency Conversion App uses the Frankfurter API to retrieve the conversion rates between two currency codes of in a certain date.
+    The Currency Conversion App uses the Frankfurter API to retrieve the conversion rates between two currency codes in a certain date.
 </h2>
             
 <p style='text-align: center; font-size: 16px'>
