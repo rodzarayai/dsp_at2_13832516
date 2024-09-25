@@ -1,6 +1,5 @@
 import plotly.express as px
-from frankfurter import *
-
+import pandas as pd
 
 def round_rate(rate):
     """
@@ -46,7 +45,7 @@ def reverse_rate(rate):
     
     
     
-def format_output(date, from_currency, to_currency, rate, inverse_rate, base_amount, conv_amount, latest=True):
+def format_output(date, from_currency, to_currency, rate,  amount, latest=True):
     """
     Function that will calculate the inverse rate from the provided input rate.
     It will check if the provided input rate is not equal to zero.
@@ -63,12 +62,21 @@ def format_output(date, from_currency, to_currency, rate, inverse_rate, base_amo
     float
         Inverse of input FX conversion rate
     """
+    #Reverse rate
+    inverse_rate = reverse_rate(rate)
     
+    #Reverse rate
+    
+    base_rate = rate / amount 
+    print(base_rate)
+    base_rate = round_rate(base_rate) #format
+    print(base_rate)
+                                
     if latest:
-        output_mssg = f"As of {date}, the latest available conversion rate from {from_currency} to {to_currency} was {rate}.\nTherefore, {base_amount} in {from_currency} correspond to {conv_amount} in {to_currency}. The inverse rate was {inverse_rate}."
+        output_mssg = f"As of {date}, the latest available conversion rate from {from_currency} to {to_currency} was {base_rate}.\nTherefore, {amount} in {from_currency} correspond to {rate} in {to_currency}. The inverse rate was {inverse_rate}."
     
     else:
-        output_mssg = f"As of {date}, the conversion rate from {from_currency} to {to_currency} was {rate}.\nTherefore, {base_amount} in {from_currency} correspond to {conv_amount} in {to_currency}. The inverse rate was {inverse_rate}."
+        output_mssg = f"As of {date}, the conversion rate from {from_currency} to {to_currency} was {base_rate}.\nTherefore, {amount} in {from_currency} correspond to {rate} in {to_currency}. The inverse rate was {inverse_rate}."
     
     
     return output_mssg
@@ -92,8 +100,8 @@ def make_conversion_chart(df,from_currency, to_currency):
 
     Returns
     -------
-    fig : plotly.graph_objs._figure.Figure
-        A Plotly interactive figure with conversion rates over time.
+    fig : 
+        A plotly interactive figure with conversion rates over time.
     """
     # Get the period data (dates and rates)
   
@@ -117,11 +125,6 @@ def make_conversion_chart(df,from_currency, to_currency):
             markers=True
         )
     return fig
-        
 
-  
-
-    # Display the chart in Streamlit
     
-
 

@@ -47,19 +47,21 @@ else:
     if latest_button:
         try:
             latest_date, fx_rate = get_latest_rates(from_currency, to_currency, amount)
-            #print(fx_rate)
-            inverse_rate = reverse_rate(fx_rate)
+            print(fx_rate)
             
             fx_rate = round_rate(fx_rate)
 
-            base_rate = fx_rate / amount 
-                
-            base_rate = round_rate(base_rate)
-            
-            
-            output_mssg = format_output(latest_date, from_currency, to_currency, base_rate, inverse_rate, amount, fx_rate, latest=True)
+
+            output_mssg = format_output(latest_date, from_currency, to_currency, fx_rate, amount, latest=True)
             
             st.write(output_mssg)
+            
+            #Print the last 30 days
+            df_period = get_last_period(from_currency, to_currency, latest_date, amount)
+            #print(df_period)
+            #print("calling plot")
+            fig = make_conversion_chart(df_period, from_currency, to_currency)
+            st.plotly_chart(fig)
 
         except:
             if amount == 0.0:
@@ -79,20 +81,17 @@ else:
     
     if historical_button:
         try:
-            fx_rate = get_historical_rate(from_currency, to_currency, historical_date,  amount)
-            inverse_rate = reverse_rate(fx_rate)
-            fx_rate = round_rate(fx_rate)
-            base_rate = fx_rate / amount 
-            base_rate = round_rate(base_rate)
             
+            fx_rate = get_historical_rate(from_currency, to_currency, historical_date,  amount)            
             
-            output_mssg = format_output(historical_date, from_currency, to_currency, base_rate, inverse_rate, amount,fx_rate, latest=False)
+            output_mssg = format_output(latest_date, from_currency, to_currency, fx_rate, amount, latest=False)
+            
             st.write(output_mssg)
             
-            
+            #Print the last 30 days
             df_period = get_last_period(from_currency, to_currency, historical_date, amount)
             #print(df_period)
-            print("calling plot")
+            #print("calling plot")
             fig = make_conversion_chart(df_period, from_currency, to_currency)
             st.plotly_chart(fig)
             
