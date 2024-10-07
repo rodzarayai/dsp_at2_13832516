@@ -1,9 +1,9 @@
 # <Currency Conversion App>
 
 ## Author
-Name: *Rodrigo Araya*
+Name: **Rodrigo Araya**
     
-Student ID: *13832516*
+Student ID: **13832516**
     
 Web App: https://currencyconverter-dsp-13832516.streamlit.app/
 
@@ -22,7 +22,7 @@ To set up the development environment for the Currency Conversion App, follow th
 
 1. Clone the repository:
     
-    git clone https://github.com/your-repo-link/currency-conversion-app.git
+        git clone https://github.com/your-repo-link/currency-conversion-app.git
 
 2. Install dependencies:
     
@@ -61,8 +61,8 @@ The requirements and packages used are explained below
 
 3. Results:
 
-The app will display the conversion rate, the converted amount, and additional information like the inverse conversion rate.
-You can also visualize the conversion trends over time using the interactive graph.
+    The app will display the conversion rate, the converted amount, and additional information like the inverse conversion rate.
+    You can also visualize the conversion trends over time using the interactive graph.
 
 ## Project Structure
 <List all folders and files of this project and provide quick description for each of them>
