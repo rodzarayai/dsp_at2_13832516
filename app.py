@@ -42,7 +42,12 @@ st.header("", divider="gray")
 #====================================================================CURRENCY LIST
 
 # Get the list of available currencies from Frankfurter
+#It will be used just for error message.
 currencies  = get_currencies_list()
+
+# This coudl be avoided without the imposed list output requirement
+# Get the dict of available currencies from Frankfurter
+currencies_dict  = get_currencies_dict()
 
 # If the list of available currencies is None, display an error message in Streamlit App
 if currencies is None:
@@ -54,7 +59,7 @@ else:
 #====================================================================CAPTURE INPUTS
 
     # Add input fields for capturing amount, from and to currencies
-    currency_list = [f"{code} - {name}" for code, name in currencies.items()]
+    currency_list = [f"{code} - {name}" for code, name in currencies_dict.items()]
     st.markdown(
     """
     <style>
@@ -99,6 +104,8 @@ else:
 
             output_mssg = format_output(latest_date, from_currency, to_currency, fx_rate, amount, latest=True)
             
+            
+            st.subheader('Latest Conversion Rate')
             st.write(output_mssg)
             
             #Print the last 30 days
@@ -131,6 +138,7 @@ else:
             
             output_mssg = format_output(historical_date, from_currency, to_currency, fx_rate, amount, latest=False)
             
+            st.subheader('Conversion Rate')
             st.write(output_mssg)
             
             #Print the last 30 days

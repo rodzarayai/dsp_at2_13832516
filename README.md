@@ -11,11 +11,20 @@ Web App: https://currencyconverter-dsp-13832516.streamlit.app/
 The Currency Conversion App uses the Frankfurter API to retrieve the conversion rates between two currency codes on a certain date. The user can choose between the latest available rate and any historical date in the past ten years. The app provides a user-friendly interface using Streamlit and includes visualizations of exchange rates for the last 30 days for any selected date.
     
 ### Challenges:
+    
+* Be constrained to all functions having an imposed ouput. Many functions are subject to enhancements, but a simple and standard format must be maintained, which limits development possibilities.
 
-* Implementing error handling for API responses and making the user experience smooth when dealing with unexpected errors (e.g., Set an initial amount to xchange and diffferent curriencies).
+* Implementing error handling for API responses and making the user experience smooth when dealing with unexpected errors (e.g., Set different currencies (from and to) by default in order to avoid error messages).
+    
+* Find the proper way to extract the daily rates and transform the ouput into a dataframe ensuring the format and consistency required for plotting exchange rate trends over a 30-day period.
 
     
 ### Future Implementations:
+    
+* Ability to convert into multiple currencies, and implementing comparison graphs to show multiple currencies against one another over selected periods.
+    
+* Ability to download results as ***xlsx*** or ***csv*** files.
+    
 
 ## How to Setup
 To set up the development environment for the Currency Conversion App, follow these steps:
@@ -70,7 +79,16 @@ The requirements and packages used are explained below
     You can also visualize the conversion trends over time using the interactive graph.
 
 ## Project Structure
-<List all folders and files of this project and provide quick description for each of them>
+
+app.py: This is the main Streamlit script. It handles user inputs, manages the UI, and displays results using the streamlit library.
+    
+api.py: This script contains a function (get_url) for making API calls to external services like Frankfurter to fetch currency conversion data. 
+    
+frankfurter.py: This file includes functions to interact with the Frankfurter API, including calling the relevant endpoints and extracting currency exchange rates.
+    
+currency.py: Contains functions for formatting the conversion rates and results to be displayed in the Streamlit app. It also manages utility functions like calculating inverse rates and rounding numbers.
+    
+images/ (Optional): A folder to store any relevant images used in the app (e.g., background images or logos).
 
 ## Citations
 <Mention authors and provide links code you source externally>

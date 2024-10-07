@@ -19,7 +19,7 @@ def get_currencies_list():
 
     Returns
     -------
-    dict
+    List
         dicttionary of  available currencies with their name or None in case of error
 
     """
@@ -28,8 +28,8 @@ def get_currencies_list():
     status_code, data = get_url(currencies_url)
     if status_code == 200:
         #print(data)
-        #return a dict with code and name. It is better for showing the names, since the codes can be unkown for the users
-        return data
+        #return a dict with code and name WOULD be better. It is better for showing the names, since the codes can be unkown for the users
+        return list(data.keys())
     else:
         print(f"Failed to retrieve currency list. Status code: {status_code}")
         return None
@@ -111,11 +111,10 @@ def get_historical_rate(from_currency, to_currency, from_date, amount):
         return None
 
 
-#Get a conversion period. Should not be longer than 90 days
+#get the last 30 days
 def get_last_period(from_currency, to_currency, date_to, amount=1.0):
     """
-    Function to retrieve currency conversion data for the past 60 days by default, 
-    or a custom date range if provided. Ensures the period is no longer than 90 days.
+    Function to retrieve currency conversion data for the past 30 days.
 
     Parameters
     ----------
@@ -134,20 +133,16 @@ def get_last_period(from_currency, to_currency, date_to, amount=1.0):
         A DataFrame containing the conversion rates for the selected period.
     """
     
-
-    print(date_to)
-    print(type(date_to))
+    
+    #If it is called from latest date date_to will be str type, while if it is called from historical, it will be date type
     if isinstance(date_to, str):
         date_to = datetime.strptime(date_to,'%Y-%m-%d').date()
     
-    print(date_to)
-    print(type(date_to))
     prior_30_date = date_to - timedelta(days=30)
 
     date_from_str = prior_30_date.strftime('%Y-%m-%d')
 
 
-    #print("Aqui")
     url = f"https://api.frankfurter.app/{date_from_str}..{date_to}?amount={amount}&from={from_currency}&to={to_currency}"
     print(url)
     status_code, data = get_url(url)
@@ -165,3 +160,33 @@ def get_last_period(from_currency, to_currency, date_to, amount=1.0):
     else:
         print(f"Failed to retrieve data. Status code: {status_code}")
         return None
+    
+#Improved version of the list    
+def get_currencies_dict():
+    """
+    Function that will call the relevant API endpoint from Frankfurter in order to get the list of available currencies.
+    After the API call, it will perform a check to see if the API call was successful.
+    If it is the case, it will load the response as JSON, extract the list of currency codes and return it as Python list.
+    Otherwise it will return the value None.
+
+    Parameters
+    ----------
+    None
+
+    Returns
+    -------
+    Dict
+        dicttionary of  available currencies with their name or None in case of error
+
+    """
+    
+    currencies_url = f"{BASE_URL}/currencies"
+    status_code, data = get_url(currencies_url)
+    if status_code == 200:
+        #print(data)
+        #return a dict with code and name. It is better for showing the names, since the codes can be unkown for the users
+        return data
+    else:
+        print(f"Failed to retrieve currency list. Status code: {status_code}")
+        return None
+        
