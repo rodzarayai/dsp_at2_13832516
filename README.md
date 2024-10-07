@@ -82,13 +82,34 @@ The requirements and packages used are explained below
 
 app.py: This is the main Streamlit script. It handles user inputs, manages the UI, and displays results using the streamlit library.
     
-api.py: This script contains a function (get_url) for making API calls to external services like Frankfurter to fetch currency conversion data. 
+api.py: This script contains functions for making API calls to external services like Frankfurter to fetch currency conversion data.
+    
+        * get_url:  Sends a GET request to the provided API endpoint, and returns the response status code and the response content or an error message if the request fails.
     
 frankfurter.py: This file includes functions to interact with the Frankfurter API, including calling the relevant endpoints and extracting currency exchange rates.
+        * get_currencies_list: Fetches the available currencies from the Frankfurter API and returns a list of currency codes.
+    
+        * get_latest_rates: Fetches the latest conversion rate between two currencies and returns the rate and the date.
+    
+        * get_historical_rate: Fetches the conversion rate between two currencies on a specific historical date.
+
+        * get_last_period: Fetches conversion rates for the last 30 days between two currencies, returning the data as a pandas DataFrame.
+
+        * get_currencies_dict: Same than get_currencies_list, this function returns a dictionary of currency codes and their respective names for better user understanding.
     
 currency.py: Contains functions for formatting the conversion rates and results to be displayed in the Streamlit app. It also manages utility functions like calculating inverse rates and rounding numbers.
     
-images/ (Optional): A folder to store any relevant images used in the app (e.g., background images or logos).
+
+    * round_rate: Rounds an input float to 4 decimal places.
+    
+    * reverse_rate: Calculates the inverse of a given exchange rate and rounds it to 4 decimal places.
+    
+    * format_output: Formats a message showing the conversion rate between two currencies for display in the UI, including the inverse rate.
+    
+    * make_conversion_chart: Generates an interactive Plotly line chart showing the exchange rates over 30 days.
+    
+logo.png: image used as logo in the Web App.
 
 ## Citations
-<Mention authors and provide links code you source externally>
+    
+https://www.frankfurter.app/

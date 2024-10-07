@@ -11,11 +11,20 @@ Web App: https://currencyconverter-dsp-13832516.streamlit.app/
 The Currency Conversion App uses the Frankfurter API to retrieve the conversion rates between two currency codes on a certain date. The user can choose between the latest available rate and any historical date in the past ten years. The app provides a user-friendly interface using Streamlit and includes visualizations of exchange rates for the last 30 days for any selected date.
     
 ### Challenges:
+    
+* Be constrained to all functions having an imposed ouput. Many functions are subject to enhancements, but a simple and standard format must be maintained, which limits development possibilities.
 
-* Implementing error handling for API responses and making the user experience smooth when dealing with unexpected errors (e.g., Set an initial amount to xchange and diffferent curriencies).
+* Implementing error handling for API responses and making the user experience smooth when dealing with unexpected errors (e.g., Set different currencies (from and to) by default in order to avoid error messages).
+    
+* Find the proper way to extract the daily rates and transform the ouput into a dataframe ensuring the format and consistency required for plotting exchange rate trends over a 30-day period.
 
     
 ### Future Implementations:
+    
+* Ability to convert into multiple currencies, and implementing comparison graphs to show multiple currencies against one another over selected periods.
+    
+* Ability to download results as ***xlsx*** or ***csv*** files.
+    
 
 ## How to Setup
 To set up the development environment for the Currency Conversion App, follow these steps:
@@ -70,7 +79,37 @@ The requirements and packages used are explained below
     You can also visualize the conversion trends over time using the interactive graph.
 
 ## Project Structure
-<List all folders and files of this project and provide quick description for each of them>
+
+app.py: This is the main Streamlit script. It handles user inputs, manages the UI, and displays results using the streamlit library.
+    
+api.py: This script contains functions for making API calls to external services like Frankfurter to fetch currency conversion data.
+    
+        * get_url:  Sends a GET request to the provided API endpoint, and returns the response status code and the response content or an error message if the request fails.
+    
+frankfurter.py: This file includes functions to interact with the Frankfurter API, including calling the relevant endpoints and extracting currency exchange rates.
+        * get_currencies_list: Fetches the available currencies from the Frankfurter API and returns a list of currency codes.
+    
+        * get_latest_rates: Fetches the latest conversion rate between two currencies and returns the rate and the date.
+    
+        * get_historical_rate: Fetches the conversion rate between two currencies on a specific historical date.
+
+        * get_last_period: Fetches conversion rates for the last 30 days between two currencies, returning the data as a pandas DataFrame.
+
+        * get_currencies_dict: Same than get_currencies_list, this function returns a dictionary of currency codes and their respective names for better user understanding.
+    
+currency.py: Contains functions for formatting the conversion rates and results to be displayed in the Streamlit app. It also manages utility functions like calculating inverse rates and rounding numbers.
+    
+
+    * round_rate: Rounds an input float to 4 decimal places.
+    
+    * reverse_rate: Calculates the inverse of a given exchange rate and rounds it to 4 decimal places.
+    
+    * format_output: Formats a message showing the conversion rate between two currencies for display in the UI, including the inverse rate.
+    
+    * make_conversion_chart: Generates an interactive Plotly line chart showing the exchange rates over 30 days.
+    
+logo.png: image used as logo in the Web App.
 
 ## Citations
-<Mention authors and provide links code you source externally>
+    
+https://www.frankfurter.app/

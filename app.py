@@ -22,7 +22,7 @@ with col1:
     st.title("Currency Conversion App")
 
 with col2:
-    st.image('logo.png', width=100) 
+    st.image('../images/logo.png', width=100) 
 
 
 st.markdown("""
