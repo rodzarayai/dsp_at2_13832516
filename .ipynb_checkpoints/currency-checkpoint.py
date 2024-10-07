@@ -73,7 +73,7 @@ def format_output(date, from_currency, to_currency, rate,  amount, latest=True):
     base_rate = round_rate(base_rate) #format
 
                  
-    output_mssg = f"The conversion rate on **{date}** from **{from_currency}** to **{to_currency}** was **{base_rate}**.\So, **{amount}** in **{from_currency}** correspond to **{rate}** in **{to_currency}**. The inverse rate was **{inverse_rate}**."
+    output_mssg = f"The conversion rate on **{date}** from **{from_currency}** to **{to_currency}** was **{base_rate}**. So, **{amount}** in **{from_currency}** correspond to **{rate}** in **{to_currency}**. The inverse rate was **{inverse_rate}**."
 
     
     return output_mssg
@@ -116,7 +116,7 @@ def make_conversion_chart(df, from_currency, to_currency):
             x='date', 
             y='rate', 
             title=f'FX Rate from {from_currency} to {to_currency} last 30 days',
-            labels={'rate': f'FX rate  from ({from_currency}) to ({to_currency})'},
+            labels={'rate': f'FX rate  from {from_currency} to {to_currency}'},
             markers=True
         )
     return fig
