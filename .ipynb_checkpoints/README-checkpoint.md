@@ -22,19 +22,19 @@ To set up the development environment for the Currency Conversion App, follow th
 
 1. Clone the repository:
     
-        git clone https://github.com/your-repo-link/currency-conversion-app.git
+        git clone https://github.com/rodzarayai/dsp_at2_13832516.git
 
 2. Install dependencies:
     
-    pip install -r requirements.txt
+        pip install -r requirements.txt
 
 The requirements and packages used are explained below
 
 3. Run the application:
     
-    streamlit run app.py
+        streamlit run app.py
     
-    Alternative, the user can access to the public web site in https://currencyconverter-dsp-13832516.streamlit.app/
+    Alternative, the user can access to the public website in https://currencyconverter-dsp-13832516.streamlit.app/
     
 🐍 Python: Version: 3.9.12
 
@@ -49,10 +49,15 @@ The requirements and packages used are explained below
 
 ## How to Run the Program
 1. Start the App:
+    
     Locally:
+    
         streamlit run app.py
-    Web-site
+    
+    Website:
+    
         https://currencyconverter-dsp-13832516.streamlit.app/
+    
 2. Input Options:
 
     * Choose the from currency and to currency.
