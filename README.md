@@ -6,6 +6,8 @@ Name: **Rodrigo Araya**
 Student ID: **13832516**
     
 Web App: https://currencyconverter-dsp-13832516.streamlit.app/
+    
+**Data Science Practice - Spring 2024 - October 7th, 2024**
 
 ## Description
 The Currency Conversion App uses the Frankfurter API to retrieve the conversion rates between two currency codes on a certain date. The user can choose between the latest available rate and any historical date in the past ten years. The app provides a user-friendly interface using Streamlit and includes visualizations of exchange rates for the last 30 days for any selected date.
@@ -84,29 +86,29 @@ The requirements and packages used are explained below
     
 **api.py:** This script contains functions for making API calls to external services like Frankfurter to fetch currency conversion data.
     
-    * get_url:  Sends a GET request to the provided API endpoint, and returns the response status code and the response content or an error message if the request fails.
+    *get_url:*  Sends a GET request to the provided API endpoint, and returns the response status code and the response content or an error message if the request fails.
     
 **frankfurter.py:** This file includes functions to interact with the Frankfurter API, including calling the relevant endpoints and extracting currency exchange rates.
     
-    * get_currencies_list: Fetches the available currencies from the Frankfurter API and returns a list of currency codes.
+    *get_currencies_list:* Fetches the available currencies from the Frankfurter API and returns a list of currency codes.
 
-    * get_latest_rates: Fetches the latest conversion rate between two currencies and returns the rate and the date.
+    *get_latest_rates:* Fetches the latest conversion rate between two currencies and returns the rate and the date.
 
-    * get_historical_rate: Fetches the conversion rate between two currencies on a specific historical date.
+    *get_historical_rate:* Fetches the conversion rate between two currencies on a specific historical date.
 
-    * get_last_period: Fetches conversion rates for the last 30 days between two currencies, returning the data as a pandas DataFrame.
+    *get_last_period:* Fetches conversion rates for the last 30 days between two currencies, returning the data as a pandas DataFrame.
 
-    * get_currencies_dict: Same than get_currencies_list, this function returns a dictionary of currency codes and their respective names for better user understanding.
+    *get_currencies_dict:* Same than get_currencies_list, this function returns a dictionary of currency codes and their respective names for better user understanding.
     
 **currency.py:** Contains functions for formatting the conversion rates and results to be displayed in the Streamlit app.
     
-    * round_rate: Rounds an input float to 4 decimal places.
+    *round_rate:* Rounds an input float to 4 decimal places.
     
-    * reverse_rate: Calculates the inverse of a given exchange rate and rounds it to 4 decimal places.
+    *reverse_rate:* Calculates the inverse of a given exchange rate and rounds it to 4 decimal places.
     
-    * format_output: Formats a message showing the conversion rate between two currencies for display in the UI, including the inverse rate.
+    *format_output:* Formats a message showing the conversion rate between two currencies for display in the UI, including the inverse rate.
     
-    * make_conversion_chart: Generates an interactive Plotly line chart showing the exchange rates over 30 days.
+    *make_conversion_chart:* Generates an interactive Plotly line chart showing the exchange rates over 30 days.
     
 **requirements.txt:** Text file with the packages used in the app.
     
