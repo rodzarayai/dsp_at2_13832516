@@ -98,9 +98,8 @@ The requirements and packages used are explained below
 
     * get_currencies_dict: Same than get_currencies_list, this function returns a dictionary of currency codes and their respective names for better user understanding.
     
-**currency.py:** Contains functions for formatting the conversion rates and results to be displayed in the Streamlit app. It also manages utility functions like calculating inverse rates and rounding numbers.
+**currency.py:** Contains functions for formatting the conversion rates and results to be displayed in the Streamlit app.
     
-
     * round_rate: Rounds an input float to 4 decimal places.
     
     * reverse_rate: Calculates the inverse of a given exchange rate and rounds it to 4 decimal places.
@@ -115,8 +114,8 @@ The requirements and packages used are explained below
 
 ## Citations
     
-https://www.frankfurter.app/
+[1] https://www.frankfurter.app/
     
-Kabir, M. (2024, September 11). Lecture 4 Version Control - Data Science Practice. Data Science Practice. UTS TD
+[2] Kabir, M. (2024, September 11). Lecture 4 Version Control - Data Science Practice. Data Science Practice. UTS TD
 School.
 https://docs.google.com/presentation/d/1FaPnQw95QnW-P7PDMEhvSrGyynwMsSuq/edit#slide=id.p1
