@@ -64,7 +64,6 @@ def get_latest_rates(from_currency, to_currency, amount):
     latest_url = f"{BASE_URL}/latest?amount={amount}&from={from_currency}&to={to_currency}"
     status_code, data = get_url(latest_url)
     if status_code == 200:
-        # Flatten the data to include amount and base as columns
         fx_rate = list(data['rates'].values())[0]
         return data['date'], fx_rate
     else:
@@ -100,10 +99,8 @@ def get_historical_rate(from_currency, to_currency, from_date, amount):
     """
     
     url = f"{BASE_URL}/{from_date}?amount={amount}&from={from_currency}&to={to_currency}"
-    print(url)
     status_code, data = get_url(url)
     if status_code == 200:
-        # Flatten the data to include amount and base as columns
         fx_rate = float(list(data['rates'].values())[0])
         return fx_rate
     else:
