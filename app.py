@@ -32,7 +32,7 @@ st.markdown("""
             
 <p style='text-align: center; font-size: 16px'>
     See the documentation on 
-    <a href='https://github.com/rodzarayai/dsp_at2_13832516/blob/master/README.md' target='_blank'>GitHub</a>.
+    <a href='https://github.com/rodzarayai/dsp_at2_13832516' target='_blank'>GitHub</a>.
 </p>
 """, unsafe_allow_html=True)
 
